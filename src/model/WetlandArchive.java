@@ -1,25 +1,62 @@
 package model;
 
 /** WetlandArchive Class - Wetland Program
+ *@author JuanSalazar
  * */
 public class WetlandArchive {
 	
+	/**
+	*  var to count the number of registered wetlands
+	* */
 	private int registeredWetlands;
 	
+	/**
+	*  constant to set the max num of wetlands that can be registered
+	* */
 	private static final int MAX_WETLANDS = 2;
 	
+	/**
+	*  array to save the wetlands
+	* */
 	private Wetland [] wetlands;
 	
+	/**
+	*  var to count var the number of registered terrestrial Flora
+	* */
 	private int terrestrialFlora;
+	
+	/**
+	*  var to count var the number of registered aquatic Flora
+	* */
 	private int aquaticFlora;
+	
+	/**
+	*  var to count var the number of registered birds
+	* */
 	private int birds;
+	
+	/**
+	*  var to count var the number of registered mammals
+	* */
 	private int mammals;
+	
+	/**
+	*  var to count var the number of registered aquatic animals
+	* */
 	private int aquaticAnimals;
+	
+	/**
+	*  var to count var the number of registered animals
+	* */
 	private int animals;
+	
+	/**
+	*  var to count var the number of registered flora
+	* */
 	private int flora;
 	
 	/**
-	* Description: constructor for WetlandArchive
+	* constructor for WetlandArchive
 	*/
 	public WetlandArchive(){
 		wetlands= new Wetland[MAX_WETLANDS];
@@ -33,6 +70,17 @@ public class WetlandArchive {
 		flora=0;
 	}
 	
+	/**
+	* Method to create and add a wetland to the array
+	* @param name String, must be initialized
+	* @param location int, must be 1 or 2
+	* @param type int, must be 1 or 2
+	* @param area double, must be initialized
+	* @param url String, must be initialized
+	* @param protectedArea int, must be initialized
+	* @param locationName String,must be initialized
+	* @param plan double, must be initialized
+	* */
 	public void addWetland(String name, int location, int type, double area, String url, int protectedArea, String locationName, double plan) {
 	
 		String stringLocation="Rural";
@@ -65,6 +113,10 @@ public class WetlandArchive {
 		registeredWetlands++;
 	}
 	
+	/**
+	* Method to find the first empty position in wetlands array
+	* @return position int, index of the empty position , -1 if the array is full
+	* */
 	public int emptyPosition(){
 		
 		int position= -1;
@@ -78,6 +130,11 @@ public class WetlandArchive {
 		return position;
 	}
 	
+	/**
+	* Method to find wetlands index with it´s name
+	* @param name String, must be initialized
+	* @return position int, index of the wetland, -1 if it is not in the array
+	* */
 	public int searchWetland(String name){
 		
 		int position= -1;
@@ -91,18 +148,37 @@ public class WetlandArchive {
 		return position;
 	}
 	
+	/**
+	* Method to get the empty position in the species array in a wetland
+	* @param wetlandPosition int, must a valid index for wetlands[]
+	* @return position int, index of the empty position , -1 if the array is full
+	* */
 	public int wetlandSpeciesEmptyPosition(int wetlandPosition){
 		
 		int position= wetlands[wetlandPosition].speciesEmptyPosition();
 		return position;
 	}
 	
+	/**
+	* Method to get the empty position in the events array in a wetland
+	* @param wetlandPosition int, must a valid index for wetlands[]
+	* @return position int, index of the empty position , -1 if the array is full
+	* */
 	public int wetlandEventsEmptyPosition(int wetlandPosition){
 		
 		int position= wetlands[wetlandPosition].eventsEmptyPosition();
 		return position;
 	}
 	
+	/**
+	* Method to create and add a species to a wetland
+	* @param wetlandName String, must be the name of a registered wetland
+	* @param name String, must be initialized
+	* @param scientificName String, must be initialized
+	* @param type int, must be initialized
+	* @param migratory int, must be 1 or 2
+	* @param wetlandPosition int, must be a valid index in wetlands[]
+	* */
 	public void addSpeciesToWetland(String wetlandName, String name, String scientificName, int type, int migratory, int wetlandPosition){
 		
 		SpeciesType speciesType=null;
@@ -152,13 +228,21 @@ public class WetlandArchive {
 				flora++;
 				animalFlora=2;
 		}
-		
-
 		Species newSpecies= new Species (name, scientificName, speciesType, booleanMigratory);
-		
 		wetlands[wetlandPosition].addSpecies(newSpecies, animalFlora);
 	}
 	
+	/**
+	* Method to create and add a event to a wetland
+	* @param type int, must be initialized
+	* @param day int, must be initialized
+	* @param month int, must be initialized
+	* @param year int, must be initialized
+	* @param description String, must be initialized
+	* @param clientName String, must be initialized
+	* @param price double, must be initialized
+	* @param wetlandPosition int,must be a valid index in wetlands[]
+	* */
 	public void addEventToWetland(int type, int day, int month, int year, String description, String clientName, double price, int wetlandPosition){
 		
 		int isMaintenance=0;
@@ -198,7 +282,8 @@ public class WetlandArchive {
 	}
 	
 	/**
-	* Description: method to find the wetland with most fauna
+	* Method to find the wetland with most fauna
+	* @return wetlandName String, name of the wetland/s with most fauna
 	*/
 	public String findMostAnimals(){
 		
@@ -229,6 +314,7 @@ public class WetlandArchive {
 	
 	/**
 	* Description: method to find the wetland with less flora
+	* @return wetlandName String, name of the wetland/s with less flora
 	*/
 	public String findLessFlora(){
 		
@@ -258,8 +344,11 @@ public class WetlandArchive {
 	
 	
 
+
 	/**
-	* Description: method to find the wetlands that has an species
+	* Method to find the wetlands where a species can be found
+	* @param speciesName String, must be the name of a registered species
+	* @return wetlandName String, name of the wetland/s where the species can be found 
 	*/
 	public String findSpeciesWetland(String speciesName) {
 		
@@ -305,7 +394,10 @@ public class WetlandArchive {
 		return flora;
 	}
 	
-	
+	/**
+	* Method to gather the information of WetlandArchive
+	* @return String, list of wetlands and count of registered species
+	*/
 	public String toString() {
 
 		String wetlandsList="";

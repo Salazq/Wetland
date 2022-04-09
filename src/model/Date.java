@@ -2,7 +2,6 @@ package model;
 
 /** Date Class - Wetland Program
  * @author JuanSalazar
- * 
  * */
 public class Date {
 

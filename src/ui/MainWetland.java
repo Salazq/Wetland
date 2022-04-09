@@ -3,24 +3,33 @@ package ui;
 import java.util.Scanner;
 import model.WetlandArchive;
 
+
 /** Main Class - Wetland Program
  * @author JuanSalazar
  * 
  * */
-
-
 public class MainWetland {
 	
+	/**
+	*  sc is the var to read inputs
+	* */
 	private Scanner sc;
+	
+	/**
+	*  archive is the controller obj of the program
+	* */
 	private WetlandArchive archive;
 	
+	/**
+	*  constructor of the class
+	* */
 	public MainWetland() {
 		sc= new Scanner(System.in);
 		archive= new WetlandArchive();
 	}
 	
 	/**
-	* Creates obj and calls methods  
+	* Main mathod of the class
 	** @param args String[]
 	*/
 	public static void main (String [] args) {
@@ -35,6 +44,10 @@ public class MainWetland {
 		}while (option!=0);
 	}
 	
+	/**
+	* Method that shows the menu of the program and recives the selection
+	* @return option int, reference of the selected option
+	* */
 	public int menu() {
 		int option;
 		System.out.println("\nSelect an option\n"+ 
@@ -52,6 +65,10 @@ public class MainWetland {
 		return option;
 	}
 	
+	/**
+	* Method that calls the methods to execute the selected option
+	*@param option int,must be initialized
+	* */
 	public void operation(int option) {
 		
 		switch(option){
@@ -155,6 +172,9 @@ public class MainWetland {
 		}
 	}
 	
+	/**
+	* Method that recives the inputs to create a wetland.
+	* */
 	public void registerWetland(){
 		
 		if (archive.emptyPosition() != -1){
@@ -211,6 +231,9 @@ public class MainWetland {
 		}
 	}
 	
+	/**
+	* Method that recives the inputs to create a species.
+	* */
 	public void registerSpecies(){
 		
 			String name;
@@ -265,6 +288,9 @@ public class MainWetland {
 			}
 	}
 	
+	/**
+	* Method that recives the inputs to create a event.
+	* */
 	public void registerEvent(){
 		
 			int day;
@@ -334,7 +360,9 @@ public class MainWetland {
 			}
 	}
 	
-	
+	/**
+	* Method that recives the inputs to find the wetland where a species can be found and prints the information
+	* */
 	public void showSpeciesWetland(){
 		
 			String speciesName="";
@@ -350,6 +378,9 @@ public class MainWetland {
 			
 	}
 	
+	/**
+	* Method that recives the input to find and show the number of maintenance of a wetland
+	* */
 	public void showMaintenance(){
 		
 			String wetlandName="";

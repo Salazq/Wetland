@@ -1,7 +1,0 @@
-package model;
-
-public enum EventType{
-	
-	MAINTENANCE, SCHOOL_VISITS, IMPROVEMENT, CELEBRATIONS
-	
-}

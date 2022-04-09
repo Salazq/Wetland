@@ -1,8 +1,13 @@
 package model;
+
+/** Event Class - Wetland Program
+ *@author JuanSalazar
+ * */
 public class Event {
 
 	/**
 	*  var to save the description
+	* 
 	* */
 	private String description;
 	

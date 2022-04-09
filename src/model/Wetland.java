@@ -1,6 +1,7 @@
 package model;
 
 /** Wetland Class - Wetland Program
+ *@author JuanSalazar
  * */
 public class Wetland {
 
@@ -39,20 +40,46 @@ public class Wetland {
 	* */
 	private String locationName;
 	
+	/**
+	*  array to save the species
+	* */
 	private Species [] species;
 
+	/**
+	*  array to save the events
+	* */
 	private Event [] events;
 	
+	/**
+	*  contant to set the max num of species that can be registered
+	* */
 	private static final int MAX_SPECIES=2;
 	
+	/**
+	*  contant to set the max num of events that can be registered
+	* */
 	private static final int MAX_EVENTS=2;
 	
+	/**
+	*  var to count the registered animals
+	* */
 	private int wetlandAnimals;
+	
+	/**
+	*  var to count the registered flora
+	* */
 	private int wetlandFlora;
 	
+	/**
+	*  var to save the percentage of fullfilment of the management plan
+	* */
 	private double  managementPlan;
 	
+	/**
+	*  var to count the num of maintenance there's been in the wetland
+	* */
 	private int maintenance;
+	
 	/**
 	* Description: constructor for Wetland
 	*<b> pre:</b> name must be declared
@@ -62,13 +89,14 @@ public class Wetland {
 	*<b> pre:</b> urlPhoto must be declared
 	*<b> pre:</b> protectedArea must be declared
 	*<b> pre:</b> locationName must be declared
-	* @param newName, must not be empty 
-	* @param newLocation, must not be empty
-	* @param newType, must not be empty
-	* @param newArea, must be bigger than 0
-	* @param newUrlPhoto, must not be empty
-	* @param newProtectedArea, must not be null
-	* @param newLocationName, must not be empty
+	* @param newName String, must not be empty 
+	* @param newLocation String, must not be empty
+	* @param newType String, must not be empty
+	* @param newArea double, must be bigger than 0
+	* @param newUrlPhoto String, must not be empty
+	* @param newProtectedArea boolean, must not be null
+	* @param newLocationName String, must not be empty
+	* @param plan double, must be initialized
 	*/
 	public Wetland(String newName, String newLocation, String newType, double newArea, String newUrlPhoto, boolean newProtectedArea,String newLocationName, double plan){
 		name=newName;
@@ -89,6 +117,10 @@ public class Wetland {
 		maintenance=0;
 	}
 	
+	/**
+	* Method to find the first empty position in species array
+	* @return position int, index of the empty position , -1 if the array is full
+	* */
 	public int speciesEmptyPosition(){
 		
 		int position= -1;
@@ -102,6 +134,10 @@ public class Wetland {
 		return position;
 	}
 	
+	/**
+	* Method to find the first empty position in events array
+	* @return position int, index of the empty position , -1 if the array is full
+	* */
 	public int eventsEmptyPosition(){
 		
 		int position= -1;
@@ -115,20 +151,28 @@ public class Wetland {
 		return position;
 	}
 	
+	/**
+	* Method to add the species to the array
+	* @param newSpecies Species, must not be null
+	* @param animalFlora int, must be 1 or 2
+	* */
 	public void addSpecies(Species newSpecies, int animalFlora) {
 
 		if (animalFlora==1){
 			wetlandAnimals++;
 		}
-		
 		else{
 			wetlandFlora++;
 		}
-			
 		int emptyPosition= speciesEmptyPosition();
 		species[emptyPosition] = newSpecies;
 	}
 	
+	/**
+	* Method to add the event to the array
+	* @param newEvent Event, must not be null
+	* @param isMaintenance int, must be 1 or 2
+	* */
 	public void addEvent(Event newEvent, int isMaintenance) {
 	
 		if (isMaintenance==1){
@@ -138,6 +182,11 @@ public class Wetland {
 		events[emptyPosition] = newEvent;
 	}
 	
+	/**
+	* Method to find a species in the the wetland
+	* @param speciesName String, must not be empty
+	* @return out boolean, true if the species was found
+	* */
 	public boolean findSpecies(String speciesName) {
 
 		boolean out=false;
@@ -152,32 +201,7 @@ public class Wetland {
 		return out;
 	}
 	
-	
-	/**
-	* Description: String to represent the object
-	*<b> pre:</b> name must be initialized
-	*<b> pre:</b> location must be initialized
-	*<b> pre:</b> type must be initialized
-	*<b> pre:</b> area must be initialized
-	*<b> pre:</b> urlPhoto must be initialized
-	*<b> pre:</b> protectedArea must be initialized
-	*<b> pre:</b> locationName must be initialized
-	*@return String, Wetland format
-	*/
-	
-	public String toString(){
-		String proArea="No";
-		
-		if (protectedArea==true){
-			proArea="Yes";
-		}
-		
-		return "Name: "+ name +"\n Location: "+ location +"\n Type: "+ type +"\n Area: "+ area + " m2" +"\n Photo url: "+ urlPhoto +"\n Protected area: "+ proArea
-		+"\n Location name: "+ locationName + "\n Management plan fulfillment: "+ managementPlan + "%" + "\n Animal species: "+ wetlandAnimals
-		+ "\n Flora species: "+ wetlandFlora;
-	}
-
-
+	//getters and setters
 	public String getName() {
 		return name;
 	}
@@ -194,5 +218,27 @@ public class Wetland {
 		return wetlandFlora;
 	}
 	
+	/**
+	* Description: String to represent the object
+	*<b> pre:</b> name must be initialized
+	*<b> pre:</b> location must be initialized
+	*<b> pre:</b> type must be initialized
+	*<b> pre:</b> area must be initialized
+	*<b> pre:</b> urlPhoto must be initialized
+	*<b> pre:</b> protectedArea must be initialized
+	*<b> pre:</b> locationName must be initialized
+	*@return String, Wetland format
+	*/
+	public String toString(){
+		String proArea="No";
+		
+		if (protectedArea==true){
+			proArea="Yes";
+		}
+		
+		return "Name: "+ name +"\n Location: "+ location +"\n Type: "+ type +"\n Area: "+ area + " m2" +"\n Photo url: "+ urlPhoto +"\n Protected area: "+ proArea
+		+"\n Location name: "+ locationName + "\n Management plan fulfillment: "+ managementPlan + "%" + "\n Animal species: "+ wetlandAnimals
+		+ "\n Flora species: "+ wetlandFlora;
+	}
 
 }

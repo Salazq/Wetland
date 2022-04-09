@@ -1,6 +1,7 @@
 package model;
 
 /** Species Class - Wetland Program
+ *@author JuanSalazar
  * */
 public class Species {
 

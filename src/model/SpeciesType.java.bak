@@ -1,7 +1,0 @@
-package model;
-
-public enum SpeciesType{
-	
-	TERRESTRIAL FLORA, AQUATIC FLORA, BIRD, MAMMAL, AQUATIC
-	
-}
