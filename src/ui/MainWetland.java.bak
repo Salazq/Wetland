@@ -184,7 +184,7 @@ public class MainWetland {
 			migratory= sc.nextInt();
 			System.out.println("");
 			
-			archive.addSpeciesToWetland(wetlandName, name, scientificName, type, migratory);
+			archive.addSpecies(wetlandName, name, scientificName, type, migratory);
 			System.out.println("Species: "+ name + " has been registered");
 			
 		}

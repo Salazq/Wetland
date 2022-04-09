@@ -89,7 +89,7 @@ public class Wetland {
 	public void addSpecies(Species newSpecies) {
 
 		int emptyPosition= emptyPosition();
-		species[emptyPosition] = newSpecies;
+		species[emptyPosition] = author;
 	}
 	
 	

@@ -67,10 +67,7 @@ public class WetlandArchive {
 	
 	public void addSpeciesToWetland(String wetlandName, String name, String scientificName, int type, int migratory){
 		
-		String stringType="";
-		boolean booleanMigratory=false;
-		
-		Species newSpecies= new Species (name, scientificName, stringType, booleanMigratory); //Cambiar type y migratory al tipo correcto
+		Species newSpecies= new Species (name, scientificName, type, migratory); //Cambiar type y migratory al tipo correcto
 		
 		wetlands[searchWetland(wetlandName)].addSpecies(newSpecies);
 	}
