@@ -25,7 +25,7 @@ public class MainWetland {
 	*/
 	public static void main (String [] args) {
 		
-		System.out.println("\nWelcome");
+		System.out.println("\n***Welcome***");
 		MainWetland main = new MainWetland();
 		
 		int option=0;
@@ -40,11 +40,11 @@ public class MainWetland {
 		System.out.println("\nSelect an option\n"+ 
 		                    " 1.Register a wetland\n"+
 		                    " 2.Register a species\n"+
-		                    " 3. \n"+
-		                    " 4. \n"+
+		                    " 3.Register an event\n"+
+		                    " 4.Show maintenance of a wetland\n"+
 		                    " 5.Show wetland with most animals\n"+
 							" 6.Show wetland with less flora\n"+
-							" 7. \n"+
+							" 7.Show wetland that contain a species\n"+
 							" 8.Show wetlands\n"+
 		                    " 0.Exit\n");
 		option = sc.nextInt();
@@ -75,10 +75,24 @@ public class MainWetland {
 			break;
 			
 		case 3:
-
+		
+			if (archive.getRegisteredWetlands() > 0){
+				registerEvent();
+			}
+			else{
+				System.out.println("There are no wetlands registered");
+			}
+			
 			break;
 
 		case 4:
+		
+			if (archive.getRegisteredWetlands() > 0){
+				showMaintenance();
+			}
+			else{
+				System.out.println("There are no wetlands registered");
+			}
 
 			break;
 		
@@ -119,7 +133,13 @@ public class MainWetland {
 			break;
 			
 		case 7:
-			
+			if (archive.getRegisteredWetlands() > 0){
+				showSpeciesWetland();
+			}
+			else{
+				System.out.println("There are no wetlands registered");
+			}
+			break;
 			
 		case 8:
 			if (archive.getRegisteredWetlands() > 0){
@@ -146,6 +166,7 @@ public class MainWetland {
 			String url;
 			int protectedArea;
 			String locationName;
+			double plan;
 			
 			System.out.println("Type the name");
 			name= sc.nextLine();
@@ -175,7 +196,11 @@ public class MainWetland {
 			locationName= sc.next();
 			System.out.println("");
 			
-			archive.addWetland(name, location, type, area, url, protectedArea, locationName);
+			System.out.println("Type the percentage of fullfilment of the management plan");
+			plan= sc.nextDouble();
+			System.out.println("");
+			
+			archive.addWetland(name, location, type, area, url, protectedArea, locationName, plan);
 			System.out.println("Wetland: "+ name + " has been registered");
 			
 		}
@@ -238,6 +263,115 @@ public class MainWetland {
 			else{
 				 System.out.println ("\nThis wetland is not registered");
 			}
+	}
+	
+	public void registerEvent(){
+		
+			int day;
+			int month;
+			int year;
+			int type;
+			String description;
+			String clientName;
+			String wetlandName;
+			double price;
+			int position;
+			
+			System.out.println("Type wetland's name");
+			wetlandName= sc.nextLine();
+			System.out.println("");
+			
+			position=archive.searchWetland(wetlandName);
+			
+			if  (position != -1) {
+				
+				if (archive.wetlandEventsEmptyPosition(position) != -1){
+					
+					System.out.println("Type the type\n" +
+										"1. Maintenance\n"+
+										"2. School Visits\n"+
+										"3. Improvement\n"+
+										"4. Celebrations\n");
+					type= sc.nextInt();
+					System.out.println("");
+			
+					System.out.println("Type the day of the event");
+					day= sc.nextInt();
+					System.out.println("");
+					
+					System.out.println("Type the month of the event");
+					month= sc.nextInt();
+					System.out.println("");
+					
+					System.out.println("Type the year of the event");
+					year= sc.nextInt();
+					System.out.println("");
+					
+					System.out.println("Type the description");
+					description= sc.next();
+					System.out.println("");
+					
+					System.out.println("Type the name of the organizer");
+					clientName= sc.next();
+					System.out.println("");
+					
+					System.out.println("Type the price");
+					price= sc.nextDouble();
+					System.out.println("");
+					
+					
+					archive.addEventToWetland(type, day, month, year, description, clientName, price, position);
+					System.out.println("Event has been registered");
+					
+				}
+				
+				else {
+					System.out.println ("\nNo more events can be registered in this wetland");
+				}
+			}
+			else{
+				 System.out.println ("\nThis wetland is not registered");
+			}
+	}
+	
+	
+	public void showSpeciesWetland(){
+		
+			String speciesName="";
+			String wetlandName="";
+			
+			System.out.println("Type the species name");
+			speciesName= sc.nextLine();
+			System.out.println("");
+			
+			wetlandName= archive.findSpeciesWetland(speciesName);
+			
+			System.out.println ("\nThis species " + wetlandName);
+			
+	}
+	
+	public void showMaintenance(){
+		
+			String wetlandName="";
+			int maintenance=0;
+			int position=0;
+			
+			System.out.println("Type the wetland name");
+			wetlandName= sc.next();
+			System.out.println("");
+			
+			position=archive.searchWetland(wetlandName);
+			
+			if  (position != -1) {
+				
+				maintenance= archive.findMaintenance(position);
+				System.out.println ("\nThis wetland has had "+ maintenance + " maintenance");
+				
+			}
+			else{
+				System.out.println ("\nThis wetland is not registered");
+			}
+			
 	}
 
 }

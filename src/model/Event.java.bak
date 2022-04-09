@@ -18,8 +18,6 @@ public class Event {
 	
 	private Date date;
 	
-	private EventType type;
-	
 	/**
 	* Description: constructor for Event
 	*<b> pre:</b> type must be declared
@@ -31,12 +29,11 @@ public class Event {
 	* @param newClientName String, must not be empty
 	* @param newPrice String, must be bigger than 0
 	*/
-	public Event(EventType newType, String newDescription, String newClientName, double newPrice, Date newDate){
+	public Event(String newDescription, String newClientName, double newPrice, Date newDate){
 		description=newDescription;
 		clientName=newClientName;
 		price=newPrice;
 		date=newDate;
-		type=newType;
 	}
 	
 	/**

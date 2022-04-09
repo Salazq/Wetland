@@ -33,11 +33,19 @@ public class WetlandArchive {
 		flora=0;
 	}
 	
-	public void addWetland(String name, int location, int type, double area, String url, int protectedArea, String locationName) {
-		
+	public void addWetland(String name, int location, int type, double area, String url, int protectedArea, String locationName, double plan) {
+	
 		String stringLocation="Rural";
 		String stringType="Private";
 		boolean booleanArea=false;
+		
+		if (plan  >100){
+			plan=100;
+		}
+		
+		if (plan  <0){
+			plan=0;
+		}
 		
 		if (location==1){
 			stringLocation="Urban";
@@ -52,7 +60,7 @@ public class WetlandArchive {
 		}
 		
 		int emptyPosition= emptyPosition();
-		wetlands [emptyPosition] = new Wetland (name, stringLocation, stringType, area, url, booleanArea, locationName);
+		wetlands [emptyPosition] = new Wetland (name, stringLocation, stringType, area, url, booleanArea, locationName, plan);
 		
 		registeredWetlands++;
 	}
@@ -89,6 +97,11 @@ public class WetlandArchive {
 		return position;
 	}
 	
+	public int wetlandEventsEmptyPosition(int wetlandPosition){
+		
+		int position= wetlands[wetlandPosition].eventsEmptyPosition();
+		return position;
+	}
 	
 	public void addSpeciesToWetland(String wetlandName, String name, String scientificName, int type, int migratory, int wetlandPosition){
 		
@@ -132,11 +145,56 @@ public class WetlandArchive {
 				aquaticAnimals++;
 				animals++;
 				break;
+				
+			default:
+				speciesType=SpeciesType.TERRESTRIAL_FLORA;
+				terrestrialFlora++;
+				flora++;
+				animalFlora=2;
 		}
+		
 
 		Species newSpecies= new Species (name, scientificName, speciesType, booleanMigratory);
 		
 		wetlands[wetlandPosition].addSpecies(newSpecies, animalFlora);
+	}
+	
+	public void addEventToWetland(int type, int day, int month, int year, String description, String clientName, double price, int wetlandPosition){
+		
+		int isMaintenance=0;
+		EventType eventType=null;
+		
+		switch (type){
+			case 1:
+				eventType=EventType.MAINTENANCE;
+				isMaintenance=1;
+
+				break;
+			
+			case 2:
+				eventType=EventType.SCHOOL_VISIT;
+
+				break;
+			
+			case 3:
+				eventType=EventType.IMPROVEMENT;
+
+				break;
+			
+			case 4:
+				eventType=EventType.CELEBRATIONS;
+				
+				break;
+				
+			default:
+				eventType=EventType.MAINTENANCE;
+		}
+		
+		Date newDate= new Date (day, month, year);
+		
+		Event newEvent= new Event (eventType, description, clientName, price, newDate);
+		
+		wetlands[wetlandPosition].addEvent(newEvent, isMaintenance);
 	}
 	
 	/**
@@ -149,17 +207,21 @@ public class WetlandArchive {
 		
 		for(int i=0; i<MAX_WETLANDS ; i++){
 			
-			int current =wetlands[i].getWetlandAnimals();
+			if (wetlands[i]!=null){
 			
-			if (current > mostNum){
+				int current =wetlands[i].getWetlandAnimals();
 				
-				mostNum= current;
-				wetlandName=wetlands[i].getName();
+				if (current > mostNum){
+					
+					mostNum= current;
+					wetlandName=wetlands[i].getName();
 
-			}
+				}
+				
+				else if (current == mostNum){
+					wetlandName+=" and " + wetlands[i].getName();
+				}
 			
-			else if (current == mostNum){
-				wetlandName+=" and " + wetlands[i].getName();
 			}
 		}
 		return wetlandName;
@@ -175,17 +237,20 @@ public class WetlandArchive {
 		
 		for(int i=0; i<MAX_WETLANDS ; i++){
 			
-			int current =wetlands[i].getWetlandFlora();
+			if (wetlands[i]!=null){
 			
-			if (current < lessNum){
+				int current =wetlands[i].getWetlandFlora();
 				
-				lessNum= current;
-				wetlandName=wetlands[i].getName();
+				if (current < lessNum){
+					
+					lessNum= current;
+					wetlandName=wetlands[i].getName();
 
-			}
-			
-			else if (current == lessNum){
-				wetlandName+=" and " + wetlands[i].getName();
+				}
+				
+				else if (current == lessNum){
+					wetlandName+=" and " + wetlands[i].getName();
+				}
 			}
 		}
 		return wetlandName;
@@ -196,8 +261,33 @@ public class WetlandArchive {
 	/**
 	* Description: method to find the wetlands that has an species
 	*/
-	public void findSpeciesWetland(String species) {
-
+	public String findSpeciesWetland(String speciesName) {
+		
+		String wetlandName="can be found in: ";
+		boolean found=false;
+		
+		for(int i=0; i<MAX_WETLANDS ; i++){
+			
+			if(wetlands[i]!=null){
+				
+				if (wetlands[i].findSpecies(speciesName) ==true) {
+					
+					found=true;
+					wetlandName+= wetlands[i].getName()+ "  ";
+				}
+			}
+		}
+		
+		if (found==false){
+			wetlandName="is not registered";
+		}
+		return wetlandName;
+	}
+	
+	public int findMaintenance(int position) {
+		
+		int maintenance= wetlands[position].getMaintenance();
+		return maintenance;
 	}
 
 	
@@ -226,7 +316,9 @@ public class WetlandArchive {
 				wetlandsList+= "\n"+ (i+1)+"." + "\n" + wetlands [i];
 			}
 		}
-		return "\nWetlands\n" + 
-				wetlandsList;		
+		return "\nWetlands" + 
+		        "\nTotal animal species: " + animals +
+				"\nTotal flora species: " + flora+
+				"\n" + wetlandsList;		
 	}
 }

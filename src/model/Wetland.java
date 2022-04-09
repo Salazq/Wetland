@@ -40,12 +40,19 @@ public class Wetland {
 	private String locationName;
 	
 	private Species [] species;
+
+	private Event [] events;
 	
 	private static final int MAX_SPECIES=2;
+	
+	private static final int MAX_EVENTS=2;
 	
 	private int wetlandAnimals;
 	private int wetlandFlora;
 	
+	private double  managementPlan;
+	
+	private int maintenance;
 	/**
 	* Description: constructor for Wetland
 	*<b> pre:</b> name must be declared
@@ -63,7 +70,7 @@ public class Wetland {
 	* @param newProtectedArea, must not be null
 	* @param newLocationName, must not be empty
 	*/
-	public Wetland(String newName, String newLocation, String newType, double newArea, String newUrlPhoto, boolean newProtectedArea,String newLocationName){
+	public Wetland(String newName, String newLocation, String newType, double newArea, String newUrlPhoto, boolean newProtectedArea,String newLocationName, double plan){
 		name=newName;
 		location=newLocation;
 		type=newType;
@@ -71,11 +78,15 @@ public class Wetland {
 		urlPhoto=newUrlPhoto;
 		protectedArea=newProtectedArea;
 		locationName= newLocationName;
+		managementPlan= plan;
 		
 		wetlandAnimals=0;
 		wetlandFlora=0;
 		
 		species= new Species [MAX_SPECIES];
+		events= new Event [MAX_EVENTS];
+		
+		maintenance=0;
 	}
 	
 	public int speciesEmptyPosition(){
@@ -90,7 +101,19 @@ public class Wetland {
 		}
 		return position;
 	}
-
+	
+	public int eventsEmptyPosition(){
+		
+		int position= -1;
+		
+		for(int i=0; i<MAX_EVENTS && position == -1; i++){
+			
+			if(events[i]==null){
+				position=i;
+			}
+		}
+		return position;
+	}
 	
 	public void addSpecies(Species newSpecies, int animalFlora) {
 
@@ -104,6 +127,29 @@ public class Wetland {
 			
 		int emptyPosition= speciesEmptyPosition();
 		species[emptyPosition] = newSpecies;
+	}
+	
+	public void addEvent(Event newEvent, int isMaintenance) {
+	
+		if (isMaintenance==1){
+			maintenance++;
+		}
+		int emptyPosition= eventsEmptyPosition();
+		events[emptyPosition] = newEvent;
+	}
+	
+	public boolean findSpecies(String speciesName) {
+
+		boolean out=false;
+		
+		for(int i=0; i<MAX_SPECIES && out==false; i++){
+			
+			if(species[i]!=null && species[i].getName().equals(speciesName)){
+				
+				out=true;
+			}
+		}
+		return out;
 	}
 	
 	
@@ -127,12 +173,17 @@ public class Wetland {
 		}
 		
 		return "Name: "+ name +"\n Location: "+ location +"\n Type: "+ type +"\n Area: "+ area + " m2" +"\n Photo url: "+ urlPhoto +"\n Protected area: "+ proArea
-		+"\n Location name: "+ locationName;
+		+"\n Location name: "+ locationName + "\n Management plan fulfillment: "+ managementPlan + "%" + "\n Animal species: "+ wetlandAnimals
+		+ "\n Flora species: "+ wetlandFlora;
 	}
 
 
 	public String getName() {
 		return name;
+	}
+	
+	public int getMaintenance() {
+		return maintenance;
 	}
 	
 	public int getWetlandAnimals() {
