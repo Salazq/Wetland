@@ -10,28 +10,46 @@ public class WetlandArchive {
 	
 	private Wetland [] wetlands;
 	
+	private int terrestrialFlora;
+	private int aquaticFlora;
+	private int birds;
+	private int mammals;
+	private int aquaticAnimals;
+	private int animals;
+	private int flora;
+	
 	/**
 	* Description: constructor for WetlandArchive
 	*/
 	public WetlandArchive(){
 		wetlands= new Wetland[MAX_WETLANDS];
 		registeredWetlands=0;
+		terrestrialFlora=0;
+		aquaticFlora=0;
+		birds=0;
+		mammals=0;
+		aquaticAnimals=0;
+		animals=0;
+		flora=0;
 	}
 	
 	public void addWetland(String name, int location, int type, double area, String url, int protectedArea, String locationName) {
 		
-		String stringLocation="";
-		String stringType="";
+		String stringLocation="Rural";
+		String stringType="Private";
 		boolean booleanArea=false;
 		
-		if (location==1){stringLocation="Urban";}
-		else {stringLocation="Rural";}
+		if (location==1){
+			stringLocation="Urban";
+		}
 		
-		if (type==1){stringType="Public";}
-		else {stringType="Private";}
+		if (type==1){
+			stringType="Public";
+		}
 		
-		if (protectedArea==1){booleanArea=true;}
-		else {booleanArea=false;}
+		if (protectedArea==1){
+			booleanArea=true;
+		}
 		
 		int emptyPosition= emptyPosition();
 		wetlands [emptyPosition] = new Wetland (name, stringLocation, stringType, area, url, booleanArea, locationName);
@@ -65,26 +83,115 @@ public class WetlandArchive {
 		return position;
 	}
 	
-	public void addSpeciesToWetland(String wetlandName, String name, String scientificName, int type, int migratory){
+	public int wetlandSpeciesEmptyPosition(int wetlandPosition){
 		
-		Species newSpecies= new Species (name, scientificName, type, migratory); //Cambiar type y migratory al tipo correcto
-		
-		wetlands[searchWetland(wetlandName)].addSpecies(newSpecies);
+		int position= wetlands[wetlandPosition].speciesEmptyPosition();
+		return position;
 	}
 	
-	/**
-	* Description: method to find the wetland with less flora
-	*/
-	public void findLessFlora() {
+	
+	public void addSpeciesToWetland(String wetlandName, String name, String scientificName, int type, int migratory, int wetlandPosition){
+		
+		SpeciesType speciesType=null;
+		boolean booleanMigratory=false;
+		int animalFlora=1;
+		
+		if (migratory==1){
+			booleanMigratory=true;
+		}
+		
+		switch (type){
+			case 1:
+				speciesType=SpeciesType.TERRESTRIAL_FLORA;
+				terrestrialFlora++;
+				flora++;
+				animalFlora=2;
+				break;
+			
+			case 2:
+				speciesType=SpeciesType.AQUATIC_FLORA;
+				aquaticFlora++;
+				flora++;
+				animalFlora=2;
+				break;
+			
+			case 3:
+				speciesType=SpeciesType.BIRD;
+				birds++;
+				animals++;
+				break;
+			
+			case 4:
+				speciesType=SpeciesType.MAMMAL;
+				mammals++;
+				animals++;
+				break;
+				
+			case 5:
+				speciesType=SpeciesType.AQUATIC;
+				aquaticAnimals++;
+				animals++;
+				break;
+		}
 
+		Species newSpecies= new Species (name, scientificName, speciesType, booleanMigratory);
+		
+		wetlands[wetlandPosition].addSpecies(newSpecies, animalFlora);
 	}
 	
 	/**
 	* Description: method to find the wetland with most fauna
 	*/
-	public void findMostFauna() {
+	public String findMostAnimals(){
 		
+		String wetlandName="";
+		int mostNum=0;
+		
+		for(int i=0; i<MAX_WETLANDS ; i++){
+			
+			int current =wetlands[i].getWetlandAnimals();
+			
+			if (current > mostNum){
+				
+				mostNum= current;
+				wetlandName=wetlands[i].getName();
+
+			}
+			
+			else if (current == mostNum){
+				wetlandName+=" and " + wetlands[i].getName();
+			}
+		}
+		return wetlandName;
 	}
+	
+	/**
+	* Description: method to find the wetland with less flora
+	*/
+	public String findLessFlora(){
+		
+		String wetlandName="";
+		int lessNum=wetlands[].getMAX_SPECIES()+1;
+		
+		for(int i=0; i<MAX_WETLANDS ; i++){
+			
+			int current =wetlands[i].getWetlandFlora();
+			
+			if (current < lessNum){
+				
+				lessNum= current;
+				wetlandName=wetlands[i].getName();
+
+			}
+			
+			else if (current == lessNum){
+				wetlandName+=" and " + wetlands[i].getName();
+			}
+		}
+		return wetlandName;
+	}
+	
+	
 
 	/**
 	* Description: method to find the wetlands that has an species
@@ -92,19 +199,22 @@ public class WetlandArchive {
 	public void findSpeciesWetland(String species) {
 
 	}
-	
-	/**
-	* Description: method to show a wetland'S information
-	*/
-	public void showWetlandInfo(String wetlandName) {
 
-	}
 	
 	//getters ans setters
 	
 	public double getRegisteredWetlands() {
 		return registeredWetlands;
 	}
+	
+	public double getAnimals() {
+		return animals;
+	}
+	
+	public double getFlora() {
+		return flora;
+	}
+	
 	
 	public String toString() {
 

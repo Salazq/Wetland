@@ -42,8 +42,6 @@ public class Species {
 		type= newType;
 	}
 	
-	
-	
 	/**
 	* Description: String to represent the object
 	*<b> pre:</b> name must be initialized

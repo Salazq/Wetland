@@ -42,9 +42,10 @@ public class MainWetland {
 		                    " 2.Register a species\n"+
 		                    " 3. \n"+
 		                    " 4. \n"+
-		                    " 5. \n"+
-							" 6. \n"+
-							" 7.Show wetlands\n"+
+		                    " 5.Show wetland with most animals\n"+
+							" 6.Show wetland with less flora\n"+
+							" 7. \n"+
+							" 8.Show wetlands\n"+
 		                    " 0.Exit\n");
 		option = sc.nextInt();
 		sc.nextLine();
@@ -64,8 +65,13 @@ public class MainWetland {
 			break;
 			
 		case 2:
-			registerSpecies();
-
+			if (archive.getRegisteredWetlands() > 0){
+				registerSpecies();
+			}
+			else{
+				System.out.println("There are no wetlands registered");
+			}
+			
 			break;
 			
 		case 3:
@@ -77,14 +83,45 @@ public class MainWetland {
 			break;
 		
 		case 5:
+		
+			if (archive.getRegisteredWetlands() > 0){
+				
+				if (archive.getAnimals ()!=0){
+					String wetlandName= archive.findMostAnimals();
+					System.out.println("The wetland with most animals is: "+ wetlandName);
+				}
+				else{
+					System.out.println("There are no animals registered");
+				}
+			}
+			else{
+				System.out.println("There are no wetlands registered");
+			}
 
 			break;
 		
 		case 6:
+		
+			if (archive.getRegisteredWetlands() > 0){
+				
+				if (archive.getFlora () !=0){
+					String wetlandName= archive.findLessFlora();
+					System.out.println("The wetland with less flora is: "+ wetlandName);
+				}
+				else{
+					System.out.println("There are no flora species registered");
+				}
+			}
+			else{
+				System.out.println("There are no wetlands registered");
+			}
 
 			break;
 			
 		case 7:
+			
+			
+		case 8:
 			if (archive.getRegisteredWetlands() > 0){
 				System.out.println(archive.toString());
 			}
@@ -92,7 +129,7 @@ public class MainWetland {
 				System.out.println("There are no wetlands registered");
 			}
 			break;
-		
+			
 		default:
 			System.out.println("\nInvalid option");
 		}
@@ -151,48 +188,56 @@ public class MainWetland {
 	
 	public void registerSpecies(){
 		
-		if (archive.emptyPosition() != -1){
-			
 			String name;
 			String scientificName;
 			int type;
 			int migratory;
 			String wetlandName;
+			int position;
 			
 			System.out.println("Type wetland's name");
 			wetlandName= sc.nextLine();
 			System.out.println("");
 			
-			System.out.println("Type the name");
-			name= sc.nextLine();
-			System.out.println("");
+			position=archive.searchWetland(wetlandName);
 			
-			System.out.println("Type the scientific name");
-			scientificName= sc.nextLine();
-			System.out.println("");
+			if  (position != -1) {
+				
+				if (archive.wetlandSpeciesEmptyPosition(position) != -1){
 			
-			System.out.println("Type the type" +
-								"1. \n"+
-								"2. \n"+
-								"3. \n"+
-								"4. \n"+
-								"5. \n");
-			type= sc.nextInt();
-			System.out.println("");
-			
-			System.out.println("Is it migratory? (1.Yes / 2.No)");
-			migratory= sc.nextInt();
-			System.out.println("");
-			
-			archive.addSpeciesToWetland(wetlandName, name, scientificName, type, migratory);
-			System.out.println("Species: "+ name + " has been registered");
-			
-		}
-		
-		else { 
-		  
-		  System.out.println ("\nNo more wetlands can be registered");
-		}
+					System.out.println("Type the name of the species");
+					name= sc.nextLine();
+					System.out.println("");
+					
+					System.out.println("Type the scientific name");
+					scientificName= sc.nextLine();
+					System.out.println("");
+					
+					System.out.println("Type the type\n" +
+										"1. Terrestrial flora\n"+
+										"2. Aquatic flora\n"+
+										"3. Bird\n"+
+										"4. Mammal\n"+
+										"5. Aquatic animal\n");
+					type= sc.nextInt();
+					System.out.println("");
+					
+					System.out.println("Is it migratory? (1.Yes / 2.No)");
+					migratory= sc.nextInt();
+					System.out.println("");
+					
+					archive.addSpeciesToWetland(wetlandName, name, scientificName, type, migratory, position);
+					System.out.println("Species: "+ name + " has been registered");
+					
+				}
+				
+				else {
+					System.out.println ("\nNo more species can be registered in this wetland");
+				}
+			}
+			else{
+				 System.out.println ("\nThis wetland is not registered");
+			}
 	}
 
 }

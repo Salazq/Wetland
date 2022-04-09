@@ -43,6 +43,9 @@ public class Wetland {
 	
 	private static final int MAX_SPECIES=2;
 	
+	private int wetlandAnimals;
+	private int wetlandFlora;
+	
 	/**
 	* Description: constructor for Wetland
 	*<b> pre:</b> name must be declared
@@ -69,10 +72,13 @@ public class Wetland {
 		protectedArea=newProtectedArea;
 		locationName= newLocationName;
 		
+		wetlandAnimals=0;
+		wetlandFlora=0;
+		
 		species= new Species [MAX_SPECIES];
 	}
 	
-	public int emptyPosition(){
+	public int speciesEmptyPosition(){
 		
 		int position= -1;
 		
@@ -86,10 +92,18 @@ public class Wetland {
 	}
 
 	
-	public void addSpecies(Species newSpecies) {
+	public void addSpecies(Species newSpecies, int animalFlora) {
 
-		int emptyPosition= emptyPosition();
-		species[emptyPosition] = author;
+		if (animalFlora==1){
+			wetlandAnimals++;
+		}
+		
+		else{
+			wetlandFlora++;
+		}
+			
+		int emptyPosition= speciesEmptyPosition();
+		species[emptyPosition] = newSpecies;
 	}
 	
 	
@@ -106,7 +120,13 @@ public class Wetland {
 	*/
 	
 	public String toString(){
-		return "Name: "+ name +"\n Location: "+ location +"\n Type: "+ type +"\n Area: "+ area +"\n Photo: "+ urlPhoto +"\n Protected area: "+ protectedArea
+		String proArea="No";
+		
+		if (protectedArea==true){
+			proArea="Yes";
+		}
+		
+		return "Name: "+ name +"\n Location: "+ location +"\n Type: "+ type +"\n Area: "+ area + "m2" +"\n Photo url: "+ urlPhoto +"\n Protected area: "+ proArea
 		+"\n Location name: "+ locationName;
 	}
 
@@ -114,58 +134,14 @@ public class Wetland {
 	public String getName() {
 		return name;
 	}
-
-	public String getLocation() {
-		return location;
+	
+	public int getWetlandAnimals() {
+		return wetlandAnimals;
 	}
-
-	public String getType() {
-		return type;
+	
+	public int getWetlandFlora() {
+		return wetlandFlora;
 	}
-
-	public double getArea() {
-		return area;
-	}
-
-	public String getUrlPhoto() {
-		return urlPhoto;
-	}
-
-	public boolean getProtectedArea() {
-		return protectedArea;
-	}
-
-	public String getLocationName() {
-		return locationName;
-	}
-
-	public void setName(String newName) {
-		name = newName;
-	}
-
-	public void setLocation(String newLocation) {
-		location = newLocation;
-	}
-
-	public void setType(String newType) {
-		type = newType;
-	}
-
-	public void setArea(double newArea) {
-		area = newArea;
-	}
-
-	public void setUrlPhoto(String newUrlPhoto) {
-		
-		urlPhoto=newUrlPhoto;
-	}
-
-	public void setProtectedArea(boolean newProtectedArea) {
-		protectedArea = newProtectedArea;
-	}
-
-	public void setLocationName(String newLocationName) {
-		locationName = newLocationName;
-	}
+	
 
 }
