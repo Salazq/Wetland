@@ -13,7 +13,7 @@ public class WetlandArchive {
 	/**
 	*  constant to set the max num of wetlands that can be registered
 	* */
-	private static final int MAX_WETLANDS = 2;
+	private static final int MAX_WETLANDS = 80;
 	
 	/**
 	*  array to save the wetlands

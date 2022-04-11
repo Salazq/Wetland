@@ -31,10 +31,10 @@ public class Species {
 	*<b> pre:</b> scientificName must be declared
 	*<b> pre:</b> isMigratory must be declared
 	*<b> pre:</b> type must be declared
-	* @param newName, must not be empty 
-	* @param newScientificName, must not be empty
-	* @param newType, must not be empty 
-	* @param newIsMigratory, must not be null
+	* @param newName String, must not be empty 
+	* @param newScientificName String , must not be empty
+	* @param newType SpeciesType, must not be null
+	* @param newIsMigratory boolean, must not be initialized
 	*/
 	public Species(String newName, String newScientificName, SpeciesType newType, boolean newIsMigratory){
 		name= newName;
@@ -42,7 +42,6 @@ public class Species {
 		isMigratory= newIsMigratory;
 		type= newType;
 	}
-	
 	
 	
 	/**
@@ -57,8 +56,7 @@ public class Species {
 		return "Name: "+ name +"\n Scientific name: "+ scientificName +"\n type: "+ type +"\n Migratory: "+ isMigratory;
 	}
 	
-	
-
+	//getters and setters
 	public String getName() {
 		return name;
 	}

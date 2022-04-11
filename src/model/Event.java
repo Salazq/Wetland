@@ -21,8 +21,14 @@ public class Event {
 	* */
 	private double price;
 	
+	/**
+	*  var to save the date
+	* */
 	private Date date;
 	
+	/**
+	*  var to save the type
+	* */
 	private EventType type;
 	
 	/**
@@ -31,10 +37,11 @@ public class Event {
 	*<b> pre:</b> description must be declared
 	*<b> pre:</b> clientName must be declared
 	*<b> pre:</b> price must be declared
-	* @param newType String, must not be empty
+	* @param newType EventType, must not be null
 	* @param newDescription String, must not be empty
 	* @param newClientName String, must not be empty
-	* @param newPrice String, must be bigger than 0
+	* @param newPrice double, must be bigger than 0
+	* @param newDate Date, must 
 	*/
 	public Event(EventType newType, String newDescription, String newClientName, double newPrice, Date newDate){
 		description=newDescription;
@@ -50,13 +57,14 @@ public class Event {
 	*<b> pre:</b> description must be initialized
 	*<b> pre:</b> clientName must be initialized
 	*<b> pre:</b> price must be initialized
+	*<b> pre:</b> date must be initialized
 	*@return String, event format
 	*/
 	public String toString(){
-		return "\nDescription: "+ description +"\nclient: "+ clientName +"\nPrice: " +"\nDate: "+ date ;
+		return "\nType: "+ type  +"\nDescription: "+ description +"\nclient: "+ clientName +"\nPrice: " + price +"\nDate: "+ date ;
 	}
 
-	
+	//getterS and setters
 	public String getDescription() {
 		return description;
 	}
@@ -68,7 +76,6 @@ public class Event {
 	public double getPrice() {
 		return price;
 	}
-
 
 	public void setDescription(String newDescription) {
 		description = newDescription;

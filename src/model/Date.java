@@ -48,29 +48,4 @@ public class Date {
 		return day +"/"+ month +"/"+ year;
 	}
 
-
-	public int getDay() {
-		return day;
-	}
-
-	public void setDay(int newDay) {
-		day = newDay;
-	}
-
-	public int getMonth() {
-		return month;
-	}
-
-	public void setMonth(int newMonth) {
-		month = newMonth;
-	}
-
-	public int getYear() {
-		return year;
-	}
-
-	public void setYear(int newYear) {
-		year = newYear;
-	}
-
 }

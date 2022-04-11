@@ -53,12 +53,12 @@ public class Wetland {
 	/**
 	*  contant to set the max num of species that can be registered
 	* */
-	private static final int MAX_SPECIES=2;
+	private static final int MAX_SPECIES=10;
 	
 	/**
 	*  contant to set the max num of events that can be registered
 	* */
-	private static final int MAX_EVENTS=2;
+	private static final int MAX_EVENTS=10;
 	
 	/**
 	*  var to count the registered animals
@@ -219,7 +219,7 @@ public class Wetland {
 	}
 	
 	/**
-	* Description: String to represent the object
+	* String to represent the object
 	*<b> pre:</b> name must be initialized
 	*<b> pre:</b> location must be initialized
 	*<b> pre:</b> type must be initialized
@@ -227,6 +227,10 @@ public class Wetland {
 	*<b> pre:</b> urlPhoto must be initialized
 	*<b> pre:</b> protectedArea must be initialized
 	*<b> pre:</b> locationName must be initialized
+	*<b> pre:</b> managementPlan must be initialized
+	*<b> pre:</b> wetlandAnimals must be initialized
+	*<b> pre:</b> wetlandAnimals must be initialized
+	*<b> pre:</b> wetlandFlora must be initialized
 	*@return String, Wetland format
 	*/
 	public String toString(){
